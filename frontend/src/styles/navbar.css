@@ -1,0 +1,95 @@
+.navbar {
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    z-index: 100;
+}
+
+.navbar-left h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.usuario-menu {
+    position: relative;
+}
+
+.usuario-boton {
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.usuario-boton:hover {
+    background: #f5f5f5;
+}
+
+.usuario-icono {
+    font-size: 24px;
+}
+
+.usuario-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.usuario-info strong {
+    font-size: 14px;
+}
+
+.usuario-info small {
+    font-size: 12px;
+    color: #777;
+}
+
+.usuario-flecha {
+    font-size: 10px;
+}
+
+.usuario-dropdown {
+    position: absolute;
+    right: 0;
+    top: 55px;
+    width: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+}
+
+.dropdown-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: #f5f5f5;
+}
+
+.cerrar-sesion {
+    color: #dc3545;
+    font-weight: 600;
+}

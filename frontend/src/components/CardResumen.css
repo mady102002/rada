@@ -1,0 +1,41 @@
+.card-resumen{
+
+    border:none;
+
+    border-radius:15px;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+.card-resumen:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.card-body{
+
+    padding:25px;
+
+}
+
+.card-body h6{
+
+    color:#6c757d;
+
+    font-weight:600;
+
+}
+
+.card-body h2{
+
+    margin-top:10px;
+
+    font-size:38px;
+
+    font-weight:bold;
+
+}
