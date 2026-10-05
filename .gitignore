@@ -4,4 +4,5 @@ frontend/node_modules/
 _site/
 .jekyll-cache/
 .sass-cache/
-vendor/
+vendor/package-lock.json
+package-lock.json
