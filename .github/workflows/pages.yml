@@ -38,6 +38,8 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        env:
+          VITE_API_URL: https://rada-backend-z1u6.onrender.com
         run: npm run build
 
       - name: Setup Pages
