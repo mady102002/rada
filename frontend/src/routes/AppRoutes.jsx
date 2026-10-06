@@ -1,5 +1,5 @@
 import {
-    BrowserRouter,
+    HashRouter,
     Routes,
     Route
 } from "react-router-dom";
@@ -39,16 +39,28 @@ import ProtectedPermissionRoute from "../components/ProtectedPermissionRoute";
 
 function AppRoutes() {
     return (
-        <BrowserRouter basename="/rada">
+        <HashRouter>
             <Routes>
 
-                <Route path="/" element={<Login />} />
+                {/* =========================
+                    LOGIN
+                ========================== */}
+                <Route
+                    path="/"
+                    element={<Login />}
+                />
 
+                {/* =========================
+                    DASHBOARD
+                ========================== */}
                 <Route
                     path="/dashboard"
                     element={<Dashboard />}
                 />
 
+                {/* =========================
+                    CLIENTES
+                ========================== */}
                 <Route
                     path="/clientes"
                     element={
@@ -76,6 +88,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    USUARIOS
+                ========================== */}
                 <Route
                     path="/usuarios"
                     element={
@@ -103,6 +118,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    ROLES
+                ========================== */}
                 <Route
                     path="/roles"
                     element={
@@ -139,6 +157,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    PERMISOS
+                ========================== */}
                 <Route
                     path="/permisos"
                     element={
@@ -166,6 +187,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    TRÁMITES
+                ========================== */}
                 <Route
                     path="/tramites"
                     element={
@@ -193,6 +217,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    PAGOS
+                ========================== */}
                 <Route
                     path="/pagos"
                     element={
@@ -220,6 +247,9 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================
+                    PERFIL
+                ========================== */}
                 <Route
                     path="/mi-perfil"
                     element={<MiPerfil />}
@@ -231,7 +261,7 @@ function AppRoutes() {
                 />
 
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
