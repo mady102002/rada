@@ -1,17 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import api from "../../api/axios";
 import Swal from "sweetalert2";
 
 function Login() {
-    const [username, setUsername] =
-        useState("");
+    const navigate = useNavigate();
 
-    const [password, setPassword] =
-        useState("");
-
-    const [cargando, setCargando] =
-        useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [cargando, setCargando] = useState(false);
 
     const iniciarSesion = async (e) => {
         e.preventDefault();
@@ -36,44 +34,25 @@ function Login() {
             // BORRAR DATOS DE SESIÓN ANTERIOR
             // ==================================
 
-            localStorage.removeItem(
-                "token"
-            );
-
-            localStorage.removeItem(
-                "usuario"
-            );
-
-            localStorage.removeItem(
-                "username"
-            );
-
-            localStorage.removeItem(
-                "roles"
-            );
-
-            localStorage.removeItem(
-                "permisos"
-            );
+            localStorage.removeItem("token");
+            localStorage.removeItem("usuario");
+            localStorage.removeItem("username");
+            localStorage.removeItem("roles");
+            localStorage.removeItem("permisos");
 
             // ==================================
             // LOGIN
             // ==================================
 
-            const respuesta =
-                await api.post(
-                    "/auth/login",
-                    {
-                        username:
-                            username.trim(),
+            const respuesta = await api.post(
+                "/auth/login",
+                {
+                    username: username.trim(),
+                    password: password
+                }
+            );
 
-                        password:
-                            password
-                    }
-                );
-
-            const datos =
-                respuesta.data;
+            const datos = respuesta.data;
 
             console.log(
                 "RESPUESTA LOGIN:",
@@ -110,36 +89,30 @@ function Login() {
             // ROLES
             // ==================================
 
-            const roles =
-                Array.isArray(
-                    datos.usuario?.roles
-                )
-                    ? datos.usuario.roles
-                    : [];
+            const roles = Array.isArray(
+                datos.usuario?.roles
+            )
+                ? datos.usuario.roles
+                : [];
 
             localStorage.setItem(
                 "roles",
-                JSON.stringify(
-                    roles
-                )
+                JSON.stringify(roles)
             );
 
             // ==================================
             // PERMISOS
             // ==================================
 
-            const permisos =
-                Array.isArray(
-                    datos.usuario?.permisos
-                )
-                    ? datos.usuario.permisos
-                    : [];
+            const permisos = Array.isArray(
+                datos.usuario?.permisos
+            )
+                ? datos.usuario.permisos
+                : [];
 
             localStorage.setItem(
                 "permisos",
-                JSON.stringify(
-                    permisos
-                )
+                JSON.stringify(permisos)
             );
 
             console.log(
@@ -152,21 +125,37 @@ function Login() {
                 permisos
             );
 
+            // ==================================
+            // MENSAJE DE BIENVENIDA
+            // ==================================
+
             await Swal.fire({
                 icon: "success",
                 title: "Bienvenido",
                 text:
                     datos.usuario?.username ||
                     username,
-
                 timer: 1000,
-
-                showConfirmButton:
-                    false
+                showConfirmButton: false
             });
 
-            window.location.href =
-                "/dashboard";
+            // ==================================
+            // IR AL DASHBOARD
+            // ==================================
+            // IMPORTANTE:
+            // Usamos navigate() porque estamos
+            // utilizando HashRouter.
+            //
+            // Esto llevará automáticamente a:
+            // /rada/#/dashboard
+            //
+            // y NO a:
+            // /dashboard
+            // ==================================
+
+            navigate("/dashboard", {
+                replace: true
+            });
 
         } catch (error) {
             console.error(
@@ -218,6 +207,8 @@ function Login() {
                                 }
                             >
 
+                                {/* USUARIO */}
+
                                 <div className="mb-3">
 
                                     <label
@@ -236,14 +227,15 @@ function Login() {
                                         }
                                         onChange={(e) =>
                                             setUsername(
-                                                e.target
-                                                    .value
+                                                e.target.value
                                             )
                                         }
                                         required
                                     />
 
                                 </div>
+
+                                {/* CONTRASEÑA */}
 
                                 <div className="mb-3">
 
@@ -263,14 +255,15 @@ function Login() {
                                         }
                                         onChange={(e) =>
                                             setPassword(
-                                                e.target
-                                                    .value
+                                                e.target.value
                                             )
                                         }
                                         required
                                     />
 
                                 </div>
+
+                                {/* BOTÓN */}
 
                                 <button
                                     type="submit"
