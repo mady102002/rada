@@ -6,3 +6,5 @@ _site/
 .sass-cache/
 vendor/package-lock.json
 package-lock.json
+.env
+.neon

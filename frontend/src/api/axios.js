@@ -1,43 +1,131 @@
 import axios from "axios";
 
+// ==========================================
+// URL DEL BACKEND
+// ==========================================
+//
+// En desarrollo:
+// VITE_API_URL=http://localhost:3000
+//
+// En producción:
+// VITE_API_URL=https://TU-BACKEND.onrender.com
+//
+// ==========================================
+
+const API_URL =
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:3000";
+
+// ==========================================
+// CONFIGURACIÓN AXIOS
+// ==========================================
+
 const api = axios.create({
-  baseURL: "http://localhost:3000",
-  headers: {
-    "Content-Type": "application/json",
-  },
+
+    baseURL: API_URL,
+
+    headers: {
+        "Content-Type":
+            "application/json",
+    },
+
+    timeout: 15000
 });
 
-// Agregar automáticamente el token en cada petición
+// ==========================================
+// AGREGAR TOKEN AUTOMÁTICAMENTE
+// ==========================================
+
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    (config) => {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+        if (token) {
+
+            config.headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+        return config;
+    },
+
+    (error) => {
+
+        return Promise.reject(error);
+
     }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
 );
 
-// Detectar cuando el token expiró o no es válido
+// ==========================================
+// MANEJAR ERRORES DE RESPUESTA
+// ==========================================
+
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
 
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
-      }
+    (response) => {
+
+        return response;
+
+    },
+
+    (error) => {
+
+        // Token inválido o expirado
+
+        if (
+            error.response?.status === 401
+        ) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            localStorage.removeItem(
+                "usuario"
+            );
+
+            localStorage.removeItem(
+                "username"
+            );
+
+            localStorage.removeItem(
+                "roles"
+            );
+
+            localStorage.removeItem(
+                "permisos"
+            );
+
+            // Con HashRouter debemos usar hash
+
+            if (
+                !window.location.hash.includes(
+                    "/login"
+                )
+            ) {
+
+                window.location.hash =
+                    "#/login";
+
+            }
+
+        }
+
+        return Promise.reject(
+            error
+        );
+
     }
-
-    return Promise.reject(error);
-  }
 );
+
+// ==========================================
+// EXPORTAR
+// ==========================================
 
 export default api;
